@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { PolicyPage } from "@/components/PolicyPage";
 export const metadata: Metadata = {
   title: "Terms of Service",
+  description:
+    "Terms governing the FusaakiGames website, listings, and future orders.",
   alternates: { canonical: "/terms/" },
 };
 export default function Page() {

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { PolicyPage } from "@/components/PolicyPage";
 export const metadata: Metadata = {
   title: "Privacy Policy",
+  description:
+    "How FusaakiGames collects, uses, shares, and retains customer information.",
   alternates: { canonical: "/privacy/" },
 };
 export default function Page() {

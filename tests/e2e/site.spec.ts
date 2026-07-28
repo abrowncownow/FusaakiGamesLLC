@@ -2,7 +2,11 @@ import { test, expect } from "@playwright/test";
 test("home and navigation", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("hobby");
-  await page.getByRole("link", { name: "About", exact: true }).click();
+  const aboutLink = page.getByRole("link", { name: "About", exact: true });
+  if (!(await aboutLink.isVisible())) {
+    await page.getByRole("button", { name: "Menu" }).click();
+  }
+  await aboutLink.click();
   await expect(page).toHaveURL(/about/);
 });
 test("contact email and policies", async ({ page }) => {

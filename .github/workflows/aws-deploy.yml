@@ -1,0 +1,37 @@
+name: Deploy to AWS
+on:
+  workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars.AWS_OIDC_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - run: pnpm build
+      - name: Deploy infrastructure
+        working-directory: infrastructure
+        run: >-
+          pnpm exec cdk deploy --require-approval never --outputs-file cdk-outputs.json
+          -c account=${{ vars.AWS_ACCOUNT_ID }}
+          -c region=${{ vars.AWS_REGION }}
+          -c domainName=${{ vars.SITE_DOMAIN }}
+          -c hostedZoneId=${{ vars.HOSTED_ZONE_ID }}
+          -c certificateArn=${{ vars.CERTIFICATE_ARN }}
+      - name: Publish static export
+        run: |
+          BUCKET=$(jq -r '.FusaakiGamesSite.BucketName' infrastructure/cdk-outputs.json)
+          DISTRIBUTION=$(jq -r '.FusaakiGamesSite.DistributionId' infrastructure/cdk-outputs.json)
+          aws s3 sync out "s3://${BUCKET}" --delete
+          aws cloudfront create-invalidation --distribution-id "${DISTRIBUTION}" --paths '/*'

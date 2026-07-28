@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { business } from "@/config/business";
-import { CTA, SectionHeading } from "@/components/Sections";
+import { CategoryCard, CTA, Hero, SectionHeading } from "@/components/Sections";
 const cats = [
   ["Sealed Booster Packs", "Factory-sealed packs from collectible card games."],
   [
@@ -25,31 +24,7 @@ export default function Home() {
           are open.
         </div>
       )}
-      <section className="relative overflow-hidden py-24 md:py-36">
-        <div className="absolute inset-0 [background-image:linear-gradient(30deg,transparent_49%,#c9a45c22_50%,transparent_51%)] [background-size:70px_70px] opacity-30" />
-        <div className="relative container">
-          <p className="eyebrow">
-            Sealed. Thoughtful. Ready for the next game.
-          </p>
-          <h1 className="display mt-4 max-w-4xl text-5xl md:text-7xl">
-            The hobby, handled with care.
-          </h1>
-          <p className="muted mt-6 max-w-2xl text-lg">
-            {business.displayName} is a veteran-owned online retailer of sealed
-            trading card game products, curated pack bundles, and accessories,
-            serving the hobby from {business.location} since{" "}
-            {business.foundedYear}.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link className="button" href="/products/">
-              Browse products
-            </Link>
-            <Link className="button secondary" href="/contact/">
-              Contact us
-            </Link>
-          </div>
-        </div>
-      </section>
+      <Hero />
       <div className="rule" />
       <section className="section">
         <div className="container">
@@ -59,12 +34,13 @@ export default function Home() {
             body="A focused catalog designed for players, collectors, and gift-givers—with availability added only when listings are ready."
           />
           <div className="grid gap-5 sm:grid-cols-2">
-            {cats.map(([t, d], i) => (
-              <article key={t} className="card p-7">
-                <span className="text-sm text-[#c9a45c]">0{i + 1}</span>
-                <h3 className="display mt-5 text-2xl">{t}</h3>
-                <p className="muted mt-2">{d}</p>
-              </article>
+            {cats.map(([title, description], index) => (
+              <CategoryCard
+                key={title}
+                index={index + 1}
+                title={title}
+                description={description}
+              />
             ))}
           </div>
         </div>

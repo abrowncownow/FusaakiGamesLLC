@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { PolicyPage } from "@/components/PolicyPage";
 export const metadata: Metadata = {
   title: "Return & Refund Policy",
+  description:
+    "Return eligibility and refund guidance for sealed products purchased from FusaakiGames.",
   alternates: { canonical: "/returns/" },
 };
 export default function Page() {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/Sections";
+import { ContactInformation, SectionHeading } from "@/components/Sections";
 import { business } from "@/config/business";
 export const metadata: Metadata = {
   title: "Contact",
@@ -21,57 +21,7 @@ export default function Contact() {
             Email {business.displayName}
           </a>
         </div>
-        <div className="card p-8">
-          <dl className="space-y-6">
-            <div>
-              <dt className="eyebrow">Email</dt>
-              <dd className="mt-1">
-                <a className="text-[#c9a45c]" href={`mailto:${business.email}`}>
-                  {business.email}
-                </a>
-              </dd>
-            </div>
-            {business.features.showPhone && (
-              <div>
-                <dt className="eyebrow">Phone</dt>
-                <dd>{business.phone}</dd>
-              </div>
-            )}
-            <div>
-              <dt className="eyebrow">Location</dt>
-              <dd>{business.location}</dd>
-            </div>
-            {business.features.showTcgplayerStorefront &&
-              business.tcgplayerStorefrontUrl && (
-                <div>
-                  <dt className="eyebrow">TCGplayer storefront</dt>
-                  <dd>
-                    <a
-                      className="text-[#c9a45c]"
-                      href={business.tcgplayerStorefrontUrl}
-                      rel="noopener noreferrer"
-                    >
-                      Visit our TCGplayer page
-                    </a>
-                  </dd>
-                </div>
-              )}
-            {business.features.showFullAddress && (
-              <div>
-                <dt className="eyebrow">Mailing address</dt>
-                <dd>{business.address}</dd>
-              </div>
-            )}
-            <div>
-              <dt className="eyebrow">Business hours</dt>
-              <dd>
-                {business.hours.map((h) => (
-                  <div key={h}>{h}</div>
-                ))}
-              </dd>
-            </div>
-          </dl>
-        </div>
+        <ContactInformation />
       </div>
     </section>
   );

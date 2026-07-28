@@ -2,13 +2,13 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests/e2e",
   webServer: {
-    command: "node node_modules/next/dist/bin/next dev",
+    command: "node tests/e2e/static-server.mjs",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: true,
   },
   use: { baseURL: "http://127.0.0.1:3000", trace: "on-first-retry" },
   projects: [
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile", use: { ...devices["iPhone 13"] } },
+    { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
 });
