@@ -13,25 +13,25 @@ export default function Suppliers() {
       <div className="container">
         <SectionHeading
           eyebrow="Supplier information"
-          title="Partnerships built on respect and reliability."
-          body={`${business.legalName} is seeking relationships with established manufacturers and distributors serving the tabletop and collectibles industry.`}
+          title="A dependable retail partner."
+          body={`${business.legalName} welcomes conversations with established manufacturers and distributors across the tabletop and collectibles industry.`}
         />
         <div className="grid gap-6 md:grid-cols-2">
           <div className="card p-7">
             <h2 className="display text-2xl">How we operate</h2>
             <p className="muted mt-4">
-              We operate primarily through online retail and third-party
-              marketplaces. Products are stored, packaged, and fulfilled using
-              professional inventory-handling practices designed to protect
-              condition and accuracy.
+              FusaakiGames operates primarily through online retail and
+              third-party marketplaces. Products are stored, packaged, and
+              fulfilled using professional inventory-handling practices that
+              protect condition and order accuracy.
             </p>
           </div>
           <div className="card p-7">
             <h2 className="display text-2xl">Brand & channel compliance</h2>
             <p className="muted mt-4">
-              We respect supplier documentation, brand restrictions, and
-              authorized sales channels. We will not list products on
-              marketplaces where a supplier or manufacturer prohibits doing so.
+              Supplier documentation, brand restrictions, and authorized sales
+              channels are followed as written. We do not list products on
+              marketplaces prohibited by a supplier or manufacturer.
             </p>
           </div>
         </div>

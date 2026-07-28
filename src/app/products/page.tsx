@@ -4,7 +4,7 @@ import { TrademarkDisclaimer } from "@/components/SiteFooter";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Explore the sealed products and accessories planned for the FusaakiGames catalog.",
+    "Explore the sealed product, curated bundle, and accessory categories from FusaakiGames.",
   alternates: { canonical: "/products/" },
 };
 const products = [
@@ -14,15 +14,15 @@ const products = [
   ],
   [
     "Three-Pack Booster Bundles",
-    "A convenient curated format of three sealed packs.",
+    "A straightforward curated format of three sealed packs.",
   ],
   [
     "Six-Pack Booster Bundles",
-    "A larger curated bundle for opening, play, or gifting.",
+    "A six-pack format suited to opening, play, or gifting.",
   ],
   [
     "Factory-Sealed Booster Boxes",
-    "Full factory-sealed displays, listed only when sourcing is finalized.",
+    "Factory-sealed displays, listed after sourcing and availability are confirmed.",
   ],
   [
     "Sleeves and Storage Accessories",
@@ -34,9 +34,9 @@ export default function Products() {
     <section className="section">
       <div className="container">
         <SectionHeading
-          eyebrow="Planned catalog"
-          title="Sealed products, clearly presented."
-          body="This preview reflects the categories we intend to carry. It is not a representation of current inventory or availability."
+          eyebrow="Catalog preview"
+          title="Sealed products. Clear expectations."
+          body="A preview of the core categories we are preparing to offer. Current inventory and availability will appear only when listings are live."
         />
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {products.map(([t, d]) => (

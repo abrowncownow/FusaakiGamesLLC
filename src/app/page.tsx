@@ -8,7 +8,7 @@ const cats = [
   ],
   [
     "Booster Boxes",
-    "Factory-sealed display boxes when sourcing and listings are finalized.",
+    "Factory-sealed display boxes, listed as sourcing and availability are confirmed.",
   ],
   [
     "Trading Card Accessories",
@@ -20,8 +20,8 @@ export default function Home() {
     <>
       {business.features.showLaunchingSoonBanner && (
         <div className="bg-[#8f3028] py-2 text-center text-sm font-semibold">
-          Our online store is launching soon. Business and supplier inquiries
-          are open.
+          FusaakiGames is preparing to launch online. Customer, business, and
+          supplier inquiries are open.
         </div>
       )}
       <Hero />
@@ -30,8 +30,8 @@ export default function Home() {
         <div className="container">
           <SectionHeading
             eyebrow="What we carry"
-            title="Built around the collecting experience."
-            body="A focused catalog designed for players, collectors, and gift-givers—with availability added only when listings are ready."
+            title="A focused catalog for players and collectors."
+            body="Sealed products, practical accessories, and curated formats—presented clearly and added only when listings are ready."
           />
           <div className="grid gap-5 sm:grid-cols-2">
             {cats.map(([title, description], index) => (
@@ -49,25 +49,25 @@ export default function Home() {
         <div className="container">
           <SectionHeading
             eyebrow="Why FusaakiGames"
-            title="Simple standards. Earned trust."
+            title="Clear standards. Dependable service."
           />
           <div className="grid gap-8 md:grid-cols-4">
             {[
               [
                 "Authentic sealed products",
-                "We focus on factory-sealed goods sourced through legitimate channels.",
+                "Our catalog centers on factory-sealed goods sourced through legitimate channels.",
               ],
               [
                 "Careful packaging",
-                "Orders will be packed to protect condition through transit.",
+                "Every order is packed to protect product condition in transit.",
               ],
               [
                 "Clear descriptions",
-                "Listings will explain exactly what customers can expect.",
+                "Each listing explains exactly what customers can expect.",
               ],
               [
-                "Reliable support",
-                "Straightforward help before and after an order.",
+                "Dependable support",
+                "Straightforward help before and after every order.",
               ],
             ].map(([t, d]) => (
               <div key={t}>

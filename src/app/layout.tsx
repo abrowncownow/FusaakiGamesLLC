@@ -10,13 +10,13 @@ export const metadata: Metadata = {
     template: "%s | FusaakiGames",
   },
   description:
-    "A Washington-based online retailer focused on sealed trading card game products, curated bundles, and accessories.",
+    "A veteran-owned Washington retailer specializing in sealed trading card products, curated bundles, and accessories.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: business.displayName,
     title: "FusaakiGames",
-    description: "Sealed products. Thoughtfully handled. Built for the hobby.",
+    description: "Sealed products. Clear standards. Dependable service.",
   },
   twitter: { card: "summary_large_image" },
 };

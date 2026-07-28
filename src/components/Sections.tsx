@@ -6,15 +6,17 @@ export function Hero() {
     <section className="relative overflow-hidden py-24 md:py-36">
       <div className="absolute inset-0 [background-image:linear-gradient(30deg,transparent_49%,#c9a45c22_50%,transparent_51%)] [background-size:70px_70px] opacity-30" />
       <div className="relative container">
-        <p className="eyebrow">Sealed. Thoughtful. Ready for the next game.</p>
+        <p className="eyebrow">
+          Sealed products. Clear standards. Ready to play.
+        </p>
         <h1 className="display mt-4 max-w-4xl text-5xl md:text-7xl">
-          The hobby, handled with care.
+          Collect with confidence.
         </h1>
         <p className="muted mt-6 max-w-2xl text-lg">
-          {business.displayName} is a veteran-owned online retailer of sealed
-          trading card game products, curated pack bundles, and accessories,
-          serving the hobby from {business.location} since{" "}
-          {business.foundedYear}.
+          {business.displayName} is a veteran-owned online retailer based in{" "}
+          {business.location}. Since {business.foundedYear}, we have focused on
+          sealed trading card products, curated pack bundles, and accessories,
+          backed by clear information and dependable service.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link className="button" href="/products/">
@@ -167,12 +169,10 @@ export function CTA() {
     <section className="section">
       <div className="card container p-8 text-center md:p-14">
         <p className="eyebrow">Questions & partnerships</p>
-        <h2 className="display mt-2 text-3xl">
-          Let’s build something lasting.
-        </h2>
+        <h2 className="display mt-2 text-3xl">Start a conversation.</h2>
         <p className="muted mx-auto mt-4 max-w-xl">
-          Customers, suppliers, and distribution partners are welcome to get in
-          touch.
+          We welcome questions from customers and conversations with suppliers
+          and distribution partners.
         </p>
         <Link className="button mt-6" href="/contact/">
           Contact us
@@ -198,7 +198,7 @@ export function ProductCard({
       <h3 className="display text-2xl">{title}</h3>
       <p className="muted mt-2">{description}</p>
       <p className="mt-4 text-sm text-[#c9a45c]">
-        Product availability and marketplace listings are being finalized.
+        Listings and marketplace availability are currently being finalized.
       </p>
     </article>
   );

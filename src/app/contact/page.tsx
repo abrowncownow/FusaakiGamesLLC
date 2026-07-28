@@ -14,8 +14,8 @@ export default function Contact() {
         <div>
           <SectionHeading
             eyebrow="Contact"
-            title="We’d be glad to hear from you."
-            body="For customer questions, supplier conversations, or general business inquiries, email is the fastest way to reach us."
+            title="We’re ready to help."
+            body="For customer support, supplier conversations, or general business inquiries, email is the fastest way to reach us."
           />
           <a className="button" href={`mailto:${business.email}`}>
             Email {business.displayName}

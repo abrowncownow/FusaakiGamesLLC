@@ -4,7 +4,7 @@ import { business } from "@/config/business";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about FusaakiGames LLC, a Washington online-first trading card retailer.",
+    "Meet FusaakiGames LLC, a veteran-owned Washington retailer established in 2024.",
   alternates: { canonical: "/about/" },
 };
 export default function About() {
@@ -15,25 +15,25 @@ export default function About() {
           <div>
             <SectionHeading
               eyebrow="About us"
-              title="A small business with a long view."
+              title="Built for the long game."
             />
             <div className="muted space-y-5">
               <p>
                 {business.legalName} is a veteran-owned Washington limited
-                liability company, established in {business.foundedYear},
-                building an online-first retail business around sealed,
-                authentic collectible products.
+                liability company established in {business.foundedYear}. We are
+                an online-first retailer specializing in sealed collectible
+                products and practical accessories.
               </p>
               <p>
-                We participate in the tabletop gaming hobby ourselves, and that
-                experience shapes our priorities: clear listings, careful
-                handling, dependable communication, and respect for the games
-                and communities we serve.
+                We participate in tabletop gaming ourselves. That experience
+                shapes our priorities: accurate listings, careful handling,
+                dependable communication, and respect for the games and their
+                communities.
               </p>
               <p>
-                We are building lasting relationships with customers and
-                suppliers through consistent, professional operations—not
-                exaggerated claims.
+                Our approach is straightforward: operate professionally,
+                communicate clearly, and build lasting relationships with
+                customers and suppliers.
               </p>
             </div>
           </div>

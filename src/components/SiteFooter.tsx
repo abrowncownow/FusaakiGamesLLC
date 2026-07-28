@@ -16,6 +16,9 @@ export function SiteFooter() {
         <div>
           <p className="font-bold">{business.legalName}</p>
           <p className="muted">{business.location}</p>
+          <p className="muted text-sm">
+            Veteran-owned · Established {business.foundedYear}
+          </p>
           <a href={`mailto:${business.email}`} className="text-[#c9a45c]">
             {business.email}
           </a>

@@ -1,7 +1,9 @@
 import { test, expect } from "@playwright/test";
 test("home and navigation", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("hobby");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "confidence",
+  );
   const aboutLink = page.getByRole("link", { name: "About", exact: true });
   if (!(await aboutLink.isVisible())) {
     await page.getByRole("button", { name: "Menu" }).click();
