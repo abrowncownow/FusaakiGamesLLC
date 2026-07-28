@@ -1,0 +1,40 @@
+{
+  "name": "fusaakigames-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest",
+    "@tailwindcss/postcss": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "latest",
+    "jsdom": "latest",
+    "postcss": "latest",
+    "prettier": "latest",
+    "prettier-plugin-tailwindcss": "latest",
+    "tailwindcss": "latest",
+    "typescript": "^6.0.2",
+    "vitest": "latest"
+  },
+  "packageManager": "pnpm@11.9.0"
+}
