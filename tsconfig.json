@@ -29,5 +29,13 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "infrastructure"]
+  "exclude": [
+    "node_modules",
+    "infrastructure",
+    "apps",
+    "packages",
+    "tests/game",
+    "playwright.game.config.ts",
+    "vitest.game.config.ts"
+  ]
 }

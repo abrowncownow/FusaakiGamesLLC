@@ -10,31 +10,53 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
-    "test:e2e": "pnpm build && playwright test"
+    "test:e2e": "pnpm build && playwright test",
+    "game:dev": "pnpm --filter @fusaakigames/simulation build && node scripts/game-dev.mjs",
+    "game:build": "pnpm --filter @fusaakigames/simulation build && pnpm --filter @fusaakigames/server build && pnpm --filter @fusaakigames/game build",
+    "game:preview": "pnpm --filter @fusaakigames/game preview",
+    "game:lint": "eslint --config eslint.game.config.mjs apps packages tests/game playwright.game.config.ts vitest.game.config.ts",
+    "game:typecheck": "pnpm --filter @fusaakigames/simulation build && pnpm --filter @fusaakigames/server typecheck && pnpm --filter @fusaakigames/game typecheck",
+    "game:test": "pnpm --filter @fusaakigames/simulation build && vitest run --config vitest.game.config.ts",
+    "game:test:e2e": "pnpm game:build && playwright test --config playwright.game.config.ts",
+    "check": "pnpm format:check && pnpm lint && pnpm game:lint && pnpm typecheck && pnpm game:typecheck && pnpm test && pnpm game:test && pnpm build && pnpm game:build",
+    "verify": "pnpm check && pnpm release:bundle && node scripts/test-browsers.mjs",
+    "release:bundle": "node scripts/package-preview.mjs"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@playwright/test": "latest",
-    "@tailwindcss/postcss": "latest",
-    "@testing-library/jest-dom": "latest",
-    "@testing-library/react": "latest",
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "autoprefixer": "latest",
-    "eslint": "^9.39.2",
-    "eslint-config-next": "latest",
-    "jsdom": "latest",
-    "postcss": "latest",
-    "prettier": "latest",
-    "prettier-plugin-tailwindcss": "latest",
-    "tailwindcss": "latest",
-    "typescript": "^6.0.2",
-    "vitest": "latest"
+    "@playwright/test": "1.62.0",
+    "@tailwindcss/postcss": "4.3.3",
+    "@testing-library/jest-dom": "7.0.0",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "24.13.4",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "autoprefixer": "10.5.4",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.12",
+    "jsdom": "29.1.1",
+    "postcss": "8.5.23",
+    "prettier": "3.9.6",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "tailwindcss": "4.3.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.0",
+    "vitest": "4.1.10"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=24.18.1 <25",
+    "pnpm": "11.19.0"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.19.0",
+      "onFail": "download"
+    }
+  }
 }
