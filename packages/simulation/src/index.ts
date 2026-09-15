@@ -1,6 +1,7 @@
 export * from "./model.js";
 export * from "./planner.js";
 export * from "./engine.js";
+export * from "./charter.js";
 import { createWorld, applyCommand, isCommand } from "./engine.js";
 import type { World, Command } from "./model.js";
 export class CommandError extends Error {

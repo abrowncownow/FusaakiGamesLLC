@@ -12,6 +12,8 @@ import {
   type RawResource,
 } from "./model.js";
 import { canHarvest, planFor, rawOutstanding } from "./planner.js";
+import { newCharter } from "./charter.js";
+import { executeCharterChoice } from "./charter-engine.js";
 
 function record(
   world: World,
@@ -29,6 +31,8 @@ function refreshPlans(world: World) {
 export function createWorld(scenario: Scenario = "balanced", seed = 7): World {
   const world: World = {
     version: WORLD_VERSION,
+    runId: 0,
+    charter: null,
     tick: 0,
     seed,
     randomState: seed,
@@ -88,6 +92,31 @@ export function isCommand(value: unknown): value is Command {
   const command = value as Record<string, unknown>;
   const keys = Object.keys(command).sort().join(",");
   switch (command.type) {
+    case "start-charter":
+      return (
+        keys === "patron,runId,type" &&
+        settlementId(command.patron) &&
+        Number.isSafeInteger(command.runId) &&
+        (command.runId as number) >= 0
+      );
+    case "charter-choice":
+      return (
+        keys === "choice,revision,runId,type" &&
+        Number.isSafeInteger(command.runId) &&
+        (command.runId as number) >= 0 &&
+        Number.isSafeInteger(command.revision) &&
+        (command.revision as number) >= 0 &&
+        typeof command.choice === "string" &&
+        [
+          "work-willow",
+          "work-bracken",
+          "raid-willow",
+          "raid-bracken",
+          "supply-willow",
+          "supply-bracken",
+          "wait",
+        ].includes(command.choice)
+      );
     case "advance":
       return (
         keys === "steps,type" &&
@@ -145,6 +174,7 @@ function gather(
   );
   world[pool] -= gathered;
   group.field[resource] += gathered;
+  return gathered;
 }
 
 function step(world: World) {
@@ -241,7 +271,13 @@ function step(world: World) {
     const assignment = world.player.assignment;
     const playerWorking = assignment?.settlementId === group.id;
     if (playerWorking) {
-      gather(world, group, "timber", assignment.profile === "skilled" ? 4 : 2);
+      const contributed = gather(
+        world,
+        group,
+        "timber",
+        assignment.profile === "skilled" ? 4 : 2,
+      );
+      if (world.charter) world.charter.helped[group.id] += contributed;
       if (!canHarvest(world, group)) {
         world.player.assignment = null;
         record(
@@ -316,9 +352,30 @@ export function applyCommand(current: World, command: Command): World {
     const reset = createWorld(command.scenario, command.seed);
     // Delayed commands from another tab must not match convoys in a new run.
     reset.nextConvoyId = current.nextConvoyId;
+    reset.runId = current.runId + 1;
     return reset;
   }
+  if (command.type === "start-charter") {
+    if (command.runId !== current.runId)
+      throw new Error(
+        "This world has changed. Refresh before starting another charter.",
+      );
+    const started = createWorld();
+    started.runId = current.runId + 1;
+    started.nextConvoyId = current.nextConvoyId;
+    started.charter = newCharter(command.patron);
+    return started;
+  }
   const world = structuredClone(current);
+  if (command.type === "charter-choice") {
+    executeCharterChoice(world, command, { step, createWorld, intercept });
+    refreshPlans(world);
+    return world;
+  }
+  if (world.charter)
+    throw new Error(
+      "This world is a charter run. Use its choices, or reset the World Lab for an experiment.",
+    );
   switch (command.type) {
     case "join": {
       const group = world.settlements.find(

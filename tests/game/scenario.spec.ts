@@ -6,7 +6,9 @@ for (const mode of ["browser", "server"] as const) {
   }) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(mode === "server" ? "/?mode=server" : "/");
+    await page.goto(
+      mode === "server" ? "/?view=lab&mode=server" : "/?view=lab",
+    );
     await expect(
       page.getByRole("heading", { name: "The Charter", exact: true }),
     ).toBeVisible();
@@ -48,7 +50,9 @@ for (const mode of ["browser", "server"] as const) {
   }) => {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto(mode === "server" ? "/?mode=server" : "/");
+    await page.goto(
+      mode === "server" ? "/?view=lab&mode=server" : "/?view=lab",
+    );
     await page.getByLabel("Starting conditions").selectOption("balanced");
     await page.getByLabel("Replay seed").fill("7");
     await page.getByRole("button", { name: "Reset scenario" }).click();
@@ -96,7 +100,9 @@ for (const mode of ["browser", "server"] as const) {
   test(`${mode}: testers can compare food and labor constraints`, async ({
     page,
   }) => {
-    await page.goto(mode === "server" ? "/?mode=server" : "/");
+    await page.goto(
+      mode === "server" ? "/?view=lab&mode=server" : "/?view=lab",
+    );
     await page.getByLabel("Starting conditions").selectOption("food-shortage");
     await page.getByRole("button", { name: "Reset scenario" }).click();
     await expect(page.getByTestId("willow-food")).toHaveText("0");
@@ -119,10 +125,10 @@ test("browser scenarios stay isolated between tabs", async ({
   page,
   context,
 }) => {
-  await page.goto("/");
+  await page.goto("/?view=lab");
   await page.getByRole("button", { name: "+10 days" }).click();
   const other = await context.newPage();
-  await other.goto("/");
+  await other.goto("/?view=lab");
   await expect(other.getByTestId("world-tick")).toHaveText("Day 0");
   await expect(page.getByTestId("world-tick")).toHaveText("Day 10");
 });

@@ -2,7 +2,9 @@
 
 The current experiment tests one causal loop: a community needs materials, assigns work, ships cargo, suffers or benefits from player intervention, then chooses its next job from the changed state. It runs in the isolated browser preview and through the local development API.
 
-## Five-minute playtest
+First-time players should start with **The First Charter**, the default game view. Its [playtest guide](first-charter.md) explains the short contract and the feedback we need. The inspection instructions below apply to **World lab**, opened from the game or by adding `?view=lab` to the URL (`&view=lab` if it already has query parameters).
+
+## World lab playtest
 
 1. Choose **Balanced**, seed **7**, then **Reset scenario**. Each settlement has four NPCs and 24 food. Without intervention, both workshops finish on day 23, followed by a two-tool order.
 2. Reset, join Willow as a new harvester, and advance one day. Willow gathers four timber to Bracken's two. Leave: your work remains while the NPCs continue. A skilled character contributes four timber per working day instead of two. The host spends one meal each day you work.
@@ -34,8 +36,8 @@ Commands are strictly validated. `advance` accepts 1–30 days; `next-convoy` st
 
 ## Current limits and next steps
 
-World schema version is now 2. There are no durable saves to migrate. Browser worlds remain isolated per page and reset on reload; server mode shares a single development actor in memory and resets on server restart. Time moves only through the scenario controls. The local API is not a public authenticated game service.
+World schema version is now 3. There are no durable saves to migrate. Browser worlds remain isolated per page and reset on reload; server mode shares a single development actor in memory and resets on server restart. Time moves through player choices in Charter mode and explicit controls in the Lab. Charter commands carry a run ID and decision revision so old clicks cannot resolve a new choice, and normal Lab commands cannot bypass a charter's deadline or ending. The local API is not a public authenticated game service.
 
-The current experiment has fixed settlement populations and starter goals, a single player, renewable food, and bounded convoy interactions. Trade, wages, player organizations, NPC recruitment, policies, general relationships, knowledge assets, 3D art and combat are still outside this slice. The pack can hold loot but cannot sell it yet; resetting the experiment restores raid rations.
+The current experiment has fixed settlement populations and starter goals, a single player, renewable food, and bounded convoy interactions. Trade, wages, player organizations, NPC recruitment, policies, general relationships, knowledge assets, 3D art and combat are still outside this slice. Charter mode adds limited trust and permits handing actual carried raw materials to a community with an unmet order. This is a supply handover at the village followed by distribution work; player travel is not modeled. The pack cannot sell loot yet; resetting the experiment restores raid rations.
 
 The next infrastructure milestone remains authenticated actors, PostgreSQL state and durable receipts committed together, an authoritative scheduler, and restart/restore tests. Before adding more economy systems, use the playtest feedback to choose the next meaningful player decision. No new dependency or paid service was added for this slice.
