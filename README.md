@@ -1,6 +1,6 @@
 # FusaakiGames website
 
-The repository also contains the game foundation: `apps/game` (React/Vite browser), `packages/simulation` (shared TypeScript world logic), and `apps/server` (local Fastify API). Start with **`pnpm game:dev`**. See the [stack decision](docs/stack.md) and [development/release guide](docs/development.md).
+The repository also contains the game prototype: `apps/game` (React/Vite browser), `packages/simulation` (shared TypeScript world logic), and `apps/server` (local Fastify API). Start with **`pnpm game:dev`**. NPC settlements now budget food and labor, build workshops, and respond to convoy losses. See the [tester guide](docs/simulation.md), [stack decision](docs/stack.md), and [development/release guide](docs/development.md).
 
 Production-oriented static website for FusaakiGames LLC. Built with Next.js App Router, strict TypeScript, and Tailwind CSS. The static `out/` export works on GitHub Pages, S3, CloudFront, or another static host.
 

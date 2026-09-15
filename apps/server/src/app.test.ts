@@ -64,4 +64,43 @@ describe("world command API", () => {
       await app.close();
     }
   });
+
+  it("applies convoy loot once across concurrent retries and rejects a stale target", async () => {
+    const app = buildApp();
+    const post = (id: string, command: object) =>
+      app.inject({
+        method: "POST",
+        url: "/api/commands",
+        payload: { id, command },
+      });
+    try {
+      const before = (await post("next", { type: "next-convoy" })).json();
+      const command = {
+        type: "intercept",
+        settlementId: "willow",
+        convoyId: before.settlements[0].convoy.id,
+      };
+      const responses = await Promise.all(
+        Array.from({ length: 5 }, () => post("raid", command)),
+      );
+      for (const response of responses) {
+        expect(response.statusCode).toBe(200);
+        expect(response.json().player.inventory).toMatchObject({
+          food: 5,
+          timber: 9,
+        });
+        expect(response.json().settlements[0].convoy.amount).toBe(3);
+      }
+      expect((await post("raid-again", command)).statusCode).toBe(409);
+      await post("advance", { type: "advance", steps: 10 });
+      const snapshot = (await app.inject("/api/world")).json();
+      expect((await post("stale", command)).statusCode).toBe(409);
+      expect(
+        (await post("bad-target", { ...command, convoyId: [] })).statusCode,
+      ).toBe(400);
+      expect((await app.inject("/api/world")).json()).toEqual(snapshot);
+    } finally {
+      await app.close();
+    }
+  });
 });

@@ -12,7 +12,8 @@ body {
   margin: 0;
 }
 button,
-select {
+select,
+input {
   font: inherit;
 }
 button,
@@ -231,6 +232,7 @@ h1 {
 }
 .time-controls {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
   background: #f9f9f1;
@@ -285,6 +287,7 @@ select {
   display: block;
   width: 100%;
   font-size: 13px;
+  margin-bottom: 7px;
 }
 .leave-button {
   width: 100%;
@@ -383,6 +386,7 @@ progress::-moz-progress-bar {
 }
 .inventory-line {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px;
   color: #8a8e80;
@@ -457,7 +461,229 @@ footer button {
   border-radius: 4px;
   margin: 16px 0;
 }
+input:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #bb862f;
+  outline-offset: 4px;
+}
+.experiment-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  background: #ebeede;
+  border-radius: 6px;
+}
+.experiment-controls > div:first-child {
+  flex: 1;
+  min-width: 200px;
+}
+.experiment-controls label {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+.experiment-controls p {
+  flex-basis: 100%;
+  font-size: 11px;
+  color: #64725e;
+  margin: 0;
+}
+.seed-control {
+  width: 110px;
+}
+.seed-control input {
+  width: 100%;
+  border: 1px solid #cdd3c3;
+  border-radius: 4px;
+  padding: 9px;
+  height: 43px;
+  color: #374c3d;
+  background: #fffef8;
+}
+.clock-note {
+  padding: 8px 18px 12px;
+  margin: 0;
+  font-size: 11px;
+  color: #64725e;
+}
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 20px 0;
+}
+.stock-grid span {
+  display: block;
+  font-size: 10px;
+  color: #64725e;
+  text-transform: capitalize;
+}
+.stock-grid strong {
+  font:
+    25px Georgia,
+    serif;
+}
+.resource-progress {
+  margin-top: 12px;
+}
+.settlement-card p.project-note {
+  font-size: 11px;
+  line-height: 1.7;
+  margin: 12px 0;
+}
+.decision {
+  border-top: 1px solid #d8ddcd;
+  margin-top: 20px;
+  padding-top: 18px;
+}
+.decision h3 {
+  margin: 0 0 8px;
+  font:
+    21px Georgia,
+    serif;
+}
+.decision > p:not(.eyebrow) {
+  font-size: 12px;
+  color: #64725e;
+}
+.worker-budget {
+  padding: 10px;
+  background: #f1f3e9;
+  border-radius: 4px;
+}
+.field-note {
+  color: #64725e;
+  font-size: 11px;
+  line-height: 1.7;
+}
+summary {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 8px 0;
+  font-weight: 600;
+}
+.choices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.choices li {
+  border-top: 1px solid #e0e4d7;
+  padding: 10px 0;
+}
+.choices li > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+}
+.choices li > div > span {
+  white-space: nowrap;
+}
+.choices p {
+  font-size: 11px;
+  margin: 5px 0 0;
+  color: #64725e;
+}
+.choices .unavailable strong {
+  font-weight: 400;
+}
+.shipments {
+  margin-top: 30px;
+  padding: 24px;
+  border: 1px solid #d8d6c2;
+  border-radius: 7px;
+  background: #f0eddf;
+}
+.shipment-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 20px;
+}
+.shipment-intro h2 {
+  font:
+    27px Georgia,
+    serif;
+  margin-bottom: 8px;
+}
+.shipment-intro p:not(.eyebrow) {
+  font-size: 12px;
+  color: #6c735d;
+}
+.player-pack {
+  background: #fffaf0;
+  border-radius: 4px;
+  padding: 10px 14px;
+  flex-shrink: 0;
+}
+.player-pack span {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.player-pack strong {
+  font-size: 12px;
+}
+.raid-rules {
+  font-size: 11px;
+  color: #6c735d;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  max-width: 850px;
+}
+.shipment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.shipment-card {
+  background: #fffdf5;
+  border: 1px solid #dddac8;
+  border-radius: 5px;
+  padding: 18px;
+}
+.shipment-card h3 {
+  font:
+    19px Georgia,
+    serif;
+  margin: 0 0 12px;
+}
+.shipment-card p {
+  font-size: 12px;
+  color: #64725e;
+}
+.shipment-card button {
+  font-size: 12px;
+}
+.shipment-card .cargo-amount {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.cargo-amount strong {
+  font:
+    27px Georgia,
+    serif;
+}
+.cargo-amount span {
+  display: block;
+  font-size: 11px;
+}
+.empty-shipment {
+  margin: 0;
+}
 @media (max-width: 950px) {
+  .shipment-intro {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  .player-pack {
+    margin-bottom: 15px;
+  }
   .app-shell {
     padding: 0 24px;
   }
@@ -506,6 +732,28 @@ footer button {
     grid-template-columns: 1fr;
     gap: 13px;
     margin-top: 20px;
+  }
+  .shipments {
+    padding: 18px;
+  }
+  .shipment-grid {
+    grid-template-columns: 1fr;
+  }
+  .card-title {
+    align-items: start;
+  }
+  .stage {
+    text-align: right;
+    max-width: 100px;
+  }
+  .world-stats {
+    padding: 15px 12px;
+  }
+  .world-stats > div {
+    padding-left: 10px;
+  }
+  .world-stats strong {
+    font-size: 23px;
   }
   .chronicle {
     grid-template-columns: 1fr;

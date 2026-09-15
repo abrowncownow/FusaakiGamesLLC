@@ -42,7 +42,7 @@ Test ports 3000, 4173, and 4310 must be available for end-to-end tests. Stop `ga
 5. GitHub Actions repeats the checks on Windows and Linux. Failed browser tests attach traces/screenshots; successful Linux jobs attach `game-preview` and `site-bundle` downloads. Download `game-preview` and serve its directory using a static server; opening `index.html` as a `file://` URL does not support the app's module assets.
 6. Review the change and merge when ready. The Pages workflow repeats the quality gate on the actual `main` commit and publishes that exact artifact. It does not rebuild a different payload after testing.
 
-Stable browser test destination after the foundation merges: **https://abrowncownow.github.io/FusaakiGamesLLC/play/**. This is an isolated scenario for each tester, not a shared persistent realm. The build ID is visible in the header and in `play/build.json`.
+Stable browser test destination: **https://abrowncownow.github.io/FusaakiGamesLLC/play/**. This is an isolated scenario for each tester, not a shared persistent realm. The build ID is visible in the header and in `play/build.json`. Follow the [simulation tester guide](simulation.md) to reproduce assistance, cargo loss, food shortages and constrained escorts.
 
 This workflow does not configure GitHub branch protection or produce live per-PR preview URLs. Required checks can be enabled in repository rules after the new workflow has run. If per-PR hosted URLs become necessary, attach a dedicated preview host to `apps/game`; do not let arbitrary PR builds replace the company website.
 

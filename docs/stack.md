@@ -26,9 +26,9 @@ Node 24 is the selected LTS line; we pin the tested patch in `.node-version` and
 
 ## What exists now
 
-`apps/game` is a runnable timber scenario. `packages/simulation` supplies a deterministic fixture: NPCs gather, carry timber, and complete a workshop; a player can contribute faster and leave. `apps/server` runs the same scenario behind a validated HTTP command API with in-memory retry receipts.
+`apps/game` runs an autonomous settlement experiment. `packages/simulation` supplies a common needs planner: crews forage, gather timber, mine ore, transport cargo, build a workshop, then craft tools. Food and labor constrain each choice. A player can join a timber crew or intercept a convoy. Lost cargo reopens material needs; future shipments may receive funded escorts or carry smaller loads. `apps/server` runs the same simulation behind a validated HTTP command API with in-memory retry receipts.
 
-This is a foundation and pipeline check. It is not the full v0.1 planner: food, ore, discretionary priorities, raids, threat responses, accounts, durable storage, and authoritative elapsed time have not been implemented. The explicit fixture stages should be replaced by the broader decision system as the prototype progresses.
+The planner replaces the original fixed timber stages. Seeded outcomes, resource ledgers, visible choices and three starting presets make behavior reproducible. This is still a bounded experiment: workshop and tool targets are fixed, food is renewable, tools do not yet affect productivity, and interception uses a simple declared rule. Accounts, durable storage, authoritative elapsed time, trade, NPC recruitment, relationships beyond route threat, and knowledge systems remain future work. See the [simulation and tester guide](simulation.md).
 
 The default browser preview is isolated per page and resets on reload. The optional local server mode shares state in server memory and loses it on server restart. The server binds to loopback and is not deployed to Pages. Publishing an isolated browser scenario does not constitute a persistent online world.
 
