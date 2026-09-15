@@ -16,7 +16,9 @@ const server = createServer((request, response) => {
   const pathname = decodeURIComponent(
     new URL(request.url ?? "/", "http://127.0.0.1").pathname,
   );
-  const relativePath = normalize(pathname).replace(/^[/\\]+/, "");
+  const relativePath = normalize(
+    pathname.replace(/^\/FusaakiGamesLLC(?=\/|$)/, ""),
+  ).replace(/^[/\\]+/, "");
   let filePath = resolve(join(exportRoot, relativePath));
   if (!filePath.startsWith(exportRoot) || !existsSync(filePath))
     filePath = resolve(join(exportRoot, relativePath, "index.html"));

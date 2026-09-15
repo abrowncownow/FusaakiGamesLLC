@@ -1,10 +1,12 @@
 # FusaakiGames website
 
+The repository also contains the game foundation: `apps/game` (React/Vite browser), `packages/simulation` (shared TypeScript world logic), and `apps/server` (local Fastify API). Start with **`pnpm game:dev`**. See the [stack decision](docs/stack.md) and [development/release guide](docs/development.md).
+
 Production-oriented static website for FusaakiGames LLC. Built with Next.js App Router, strict TypeScript, and Tailwind CSS. The static `out/` export works on GitHub Pages, S3, CloudFront, or another static host.
 
 ## Local setup
 
-Use Node.js 22 or newer. Run `pnpm install`, then `pnpm dev`. Quality checks are `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm build`. Playwright smoke tests use `pnpm exec playwright install chromium` followed by `pnpm test:e2e`.
+Use Node.js 24.19.0 and pnpm 11.19.0. Run `pnpm install --frozen-lockfile`, then `pnpm dev` for the website or `pnpm game:dev` for the game. `pnpm verify` runs formatting, lint, types, unit/API tests, builds, and Playwright smoke tests for both apps. Install the browser with `pnpm exec playwright install chromium` first.
 
 ## Business information and branding
 
@@ -12,7 +14,7 @@ All editable identity, contact details, hours, marketplace URLs, and feature fla
 
 ## Static export and GitHub Pages
 
-`pnpm build` produces `out/`. The Pages workflow publishes that directory after a push to `main`. The repository is public so GitHub Pages can deploy on the current account plan. The deployment uses GitHub Actions and HTTPS.
+`pnpm build` produces the website in `out/`; `pnpm game:build` builds the game. `pnpm release:bundle` combines the tested static outputs with the game under `/play/`. The Pages workflow runs the quality gate after a push to `main` and publishes its artifact. Feature branches and PRs produce downloadable preview artifacts. The deployment uses the existing GitHub Actions/Pages setup and HTTPS.
 
 ## AWS deployment
 

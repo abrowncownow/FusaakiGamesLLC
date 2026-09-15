@@ -1,0 +1,57 @@
+name: Quality checks
+on:
+  push:
+    branches: ["codex/**"]
+  pull_request:
+    branches: [main]
+  workflow_call:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  quality:
+    name: Validate (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm check
+      - run: pnpm release:bundle
+      - run: pnpm exec playwright test
+        env:
+          TEST_RELEASE_BUNDLE: "true"
+      - run: pnpm exec playwright test --config playwright.game.config.ts
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: test-failure-${{ matrix.os }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+      - uses: actions/upload-artifact@v7
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: site-bundle
+          path: .artifacts/site/
+          retention-days: 14
+      - uses: actions/upload-artifact@v7
+        if: matrix.os == 'ubuntu-latest'
+        with:
+          name: game-preview
+          path: .artifacts/game/
+          retention-days: 14

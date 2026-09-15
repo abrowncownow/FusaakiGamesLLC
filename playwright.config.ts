@@ -4,7 +4,7 @@ export default defineConfig({
   webServer: {
     command: "node tests/e2e/static-server.mjs",
     url: "http://127.0.0.1:3000",
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
   use: { baseURL: "http://127.0.0.1:3000", trace: "on-first-retry" },
   projects: [

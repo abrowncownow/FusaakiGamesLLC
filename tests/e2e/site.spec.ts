@@ -33,3 +33,13 @@ test("mobile menu toggles", async ({ page }) => {
   await button.click();
   await expect(button).toHaveAttribute("aria-expanded", "false");
 });
+
+test("packaged game loads under the deployment subpath", async ({ page }) => {
+  test.skip(!process.env.TEST_RELEASE_BUNDLE, "Requires pnpm release:bundle.");
+  await page.goto("/FusaakiGamesLLC/play/");
+  await expect(
+    page.getByRole("heading", { name: "The Charter", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "+1 day", exact: true }).click();
+  await expect(page.getByTestId("world-tick")).toHaveText("Day 1");
+});
