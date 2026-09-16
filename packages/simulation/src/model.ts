@@ -1,6 +1,7 @@
 import type { CharterChoiceId, CharterRun } from "./charter.js";
+import type { JourneyActionId, JourneyRun } from "./journey.js";
 
-export const WORLD_VERSION = 3;
+export const WORLD_VERSION = 4;
 export const WORKSHOP_COST = { timber: 24, ore: 8 } as const;
 export const TIMBER_REQUIRED = WORKSHOP_COST.timber;
 export const TRAVEL_DAYS = 3;
@@ -79,6 +80,7 @@ export interface World {
   version: typeof WORLD_VERSION;
   runId: number;
   charter: CharterRun | null;
+  journey: JourneyRun | null;
   tick: number;
   seed: number;
   randomState: number;
@@ -101,6 +103,13 @@ export interface World {
 }
 
 export type Command =
+  | { type: "start-journey"; runId: number }
+  | {
+      type: "journey-action";
+      runId: number;
+      revision: number;
+      action: JourneyActionId;
+    }
   | { type: "start-charter"; patron: SettlementId; runId: number }
   | {
       type: "charter-choice";

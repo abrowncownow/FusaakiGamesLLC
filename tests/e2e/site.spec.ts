@@ -38,11 +38,12 @@ test("packaged game loads under the deployment subpath", async ({ page }) => {
   test.skip(!process.env.TEST_RELEASE_BUNDLE, "Requires pnpm release:bundle.");
   await page.goto("/FusaakiGamesLLC/play/");
   await expect(
-    page.getByRole("heading", { name: "The First Charter", exact: true }),
+    page.getByRole("heading", { name: "The valley", exact: true }),
   ).toBeVisible();
   await page
-    .getByRole("button", { name: "Promise Willow", exact: true })
+    .getByRole("button", { name: "Enter the valley", exact: false })
     .click();
-  await page.getByTestId("choice-work-willow").click();
-  await expect(page.getByTestId("charter-day")).toHaveText("Day 3");
+  await page.getByTestId("journey-gather-timber").click();
+  await expect(page.getByTestId("journey-day")).toHaveText("Day 1");
+  await expect(page.getByTestId("pack-timber")).toHaveText("4");
 });

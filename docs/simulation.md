@@ -2,7 +2,7 @@
 
 The current experiment tests one causal loop: a community needs materials, assigns work, ships cargo, suffers or benefits from player intervention, then chooses its next job from the changed state. It runs in the isolated browser preview and through the local development API.
 
-First-time players should start with **The First Charter**, the default game view. Its [playtest guide](first-charter.md) explains the short contract and the feedback we need. The inspection instructions below apply to **World lab**, opened from the game or by adding `?view=lab` to the URL (`&view=lab` if it already has query parameters).
+First-time players should start with **Explore the valley**, the default game view. Its [playtest guide](explore-the-valley.md) explains spatial actions and the feedback we need. The [First Charter challenge](first-charter.md) remains available at `?view=charter`. The inspection instructions below apply to **World lab**, opened from the game or by adding `?view=lab` to the URL (`&view=lab` if it already has query parameters).
 
 ## World lab playtest
 

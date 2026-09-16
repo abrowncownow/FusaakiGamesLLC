@@ -13,7 +13,7 @@ pnpm exec playwright install chromium
 pnpm game:dev
 ```
 
-The browser starts at **http://127.0.0.1:5173/** with **The First Charter**, a short playable chapter. Use **?view=lab** for the detailed simulation dashboard. Add **mode=server** to either view's query string to exercise the local Fastify API at port 4310. Stop development with Ctrl+C. The simulation compiler, API watcher, and browser dev server are started together. The browser uses compiled simulation exports; saving engine code triggers a rebuild.
+The browser starts at **http://127.0.0.1:5173/** with **Explore the valley**, a spatial exploration playtest. Use **?view=charter** for the earlier timed chapter or **?view=lab** for the detailed simulation dashboard. Add **mode=server** to any view's query string to exercise the local Fastify API at port 4310. Stop development with Ctrl+C. The simulation compiler, API watcher, and browser dev server are started together. The browser uses compiled simulation exports; saving engine code triggers a rebuild.
 
 Docker is not required for this fixture. PostgreSQL and hosted authentication are the next infrastructure milestone, before shared persistent play. No API keys are needed now. Never put future database or service-role credentials in a `VITE_` variable, because browser build variables are public.
 
@@ -42,7 +42,7 @@ Test ports 3000, 4173, and 4310 must be available for end-to-end tests. Stop `ga
 5. GitHub Actions repeats the checks on Windows and Linux. Failed browser tests attach traces/screenshots; successful Linux jobs attach `game-preview` and `site-bundle` downloads. Download `game-preview` and serve its directory using a static server; opening `index.html` as a `file://` URL does not support the app's module assets.
 6. Review the change and merge when ready. The Pages workflow repeats the quality gate on the actual `main` commit and publishes that exact artifact. It does not rebuild a different payload after testing.
 
-Stable browser test destination after a reviewed merge: **https://abrowncownow.github.io/FusaakiGamesLLC/play/**. This is an isolated scenario for each tester, not a shared persistent realm. The build ID is visible in the header and in `play/build.json`. Start with the [First Charter playtest](first-charter.md); use the [simulation tester guide](simulation.md) for assistance, cargo loss, food shortages and constrained escorts in the Lab.
+Stable browser test destination after a reviewed merge: **https://abrowncownow.github.io/FusaakiGamesLLC/play/**. This is an isolated scenario for each tester, not a shared persistent realm. The build ID is visible in the header and in `play/build.json`. Start with the [valley exploration playtest](explore-the-valley.md); use the [simulation tester guide](simulation.md) for assistance, cargo loss, food shortages and constrained escorts in the Lab.
 
 This workflow does not configure GitHub branch protection or produce live per-PR preview URLs. Required checks can be enabled in repository rules after the new workflow has run. If per-PR hosted URLs become necessary, attach a dedicated preview host to `apps/game`; do not let arbitrary PR builds replace the company website.
 

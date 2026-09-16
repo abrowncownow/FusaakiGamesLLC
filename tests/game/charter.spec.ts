@@ -54,7 +54,9 @@ for (const mode of ["browser", "server"] as const) {
       );
       expect(response.ok()).toBe(true);
     }
-    await page.goto(mode === "server" ? "/?mode=server" : "/");
+    await page.goto(
+      mode === "server" ? "/?view=charter&mode=server" : "/?view=charter",
+    );
     await expect(
       page.getByRole("button", { name: "Promise Willow", exact: true }),
     ).toBeVisible();
@@ -95,7 +97,9 @@ for (const mode of ["browser", "server"] as const) {
       );
       expect(response.ok()).toBe(true);
     }
-    await page.goto(mode === "server" ? "/?mode=server" : "/");
+    await page.goto(
+      mode === "server" ? "/?view=charter&mode=server" : "/?view=charter",
+    );
     await page
       .getByRole("button", { name: "Promise Bracken", exact: true })
       .click();
@@ -139,7 +143,7 @@ test("a stale server tab refreshes the report without executing its old choice",
       data: { id, command },
     });
   await post(`reset-stale-${Date.now()}`, { type: "reset" });
-  await page.goto("/?mode=server");
+  await page.goto("/?view=charter&mode=server");
   await page
     .getByRole("button", { name: "Promise Willow", exact: true })
     .click();

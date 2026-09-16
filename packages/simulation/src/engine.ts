@@ -14,6 +14,8 @@ import {
 import { canHarvest, planFor, rawOutstanding } from "./planner.js";
 import { newCharter } from "./charter.js";
 import { executeCharterChoice } from "./charter-engine.js";
+import { newJourney } from "./journey.js";
+import { executeJourneyAction } from "./journey-engine.js";
 
 function record(
   world: World,
@@ -33,6 +35,7 @@ export function createWorld(scenario: Scenario = "balanced", seed = 7): World {
     version: WORLD_VERSION,
     runId: 0,
     charter: null,
+    journey: null,
     tick: 0,
     seed,
     randomState: seed,
@@ -92,6 +95,36 @@ export function isCommand(value: unknown): value is Command {
   const command = value as Record<string, unknown>;
   const keys = Object.keys(command).sort().join(",");
   switch (command.type) {
+    case "start-journey":
+      return (
+        keys === "runId,type" &&
+        Number.isSafeInteger(command.runId) &&
+        (command.runId as number) >= 0
+      );
+    case "journey-action":
+      return (
+        keys === "action,revision,runId,type" &&
+        Number.isSafeInteger(command.runId) &&
+        (command.runId as number) >= 0 &&
+        Number.isSafeInteger(command.revision) &&
+        (command.revision as number) >= 0 &&
+        typeof command.action === "string" &&
+        [
+          "travel-willow",
+          "travel-bracken",
+          "travel-wood",
+          "travel-mine",
+          "travel-ruins",
+          "gather-timber",
+          "gather-ore",
+          "deliver-willow",
+          "deliver-bracken",
+          "build-willow",
+          "build-bracken",
+          "rest",
+          "discover-ruins",
+        ].includes(command.action)
+      );
     case "start-charter":
       return (
         keys === "patron,runId,type" &&
@@ -177,6 +210,28 @@ function gather(
   return gathered;
 }
 
+function buildWorkshop(world: World, group: Settlement, workers: number) {
+  if (group.workshop.work === 0) {
+    for (const resource of ["timber", "ore"] as const) {
+      group.home[resource] -= WORKSHOP_COST[resource];
+      group.workshop.reserved[resource] += WORKSHOP_COST[resource];
+    }
+  }
+  group.workshop.work = Math.min(6, group.workshop.work + workers);
+  if (group.workshop.work === 6) {
+    group.workshop.complete = true;
+    for (const resource of ["timber", "ore"] as const) {
+      group.used[resource] += group.workshop.reserved[resource];
+      group.workshop.reserved[resource] = 0;
+    }
+    record(
+      world,
+      "project",
+      `${group.name} completed its workshop. Toolmaking is now available; the crew placed an order for two tools.`,
+    );
+  }
+}
+
 function step(world: World) {
   world.tick++;
   for (const group of world.settlements) {
@@ -230,25 +285,7 @@ function step(world: World) {
         break;
       }
       case "build": {
-        if (group.workshop.work === 0) {
-          for (const resource of ["timber", "ore"] as const) {
-            group.home[resource] -= WORKSHOP_COST[resource];
-            group.workshop.reserved[resource] += WORKSHOP_COST[resource];
-          }
-        }
-        group.workshop.work = Math.min(6, group.workshop.work + action.workers);
-        if (group.workshop.work === 6) {
-          group.workshop.complete = true;
-          for (const resource of ["timber", "ore"] as const) {
-            group.used[resource] += group.workshop.reserved[resource];
-            group.workshop.reserved[resource] = 0;
-          }
-          record(
-            world,
-            "project",
-            `${group.name} completed its workshop. Toolmaking is now available; the crew placed an order for two tools.`,
-          );
-        }
+        buildWorkshop(world, group, action.workers);
         break;
       }
       case "craft": {
@@ -366,7 +403,31 @@ export function applyCommand(current: World, command: Command): World {
     started.charter = newCharter(command.patron);
     return started;
   }
+  if (command.type === "start-journey") {
+    if (command.runId !== current.runId)
+      throw new Error(
+        "This world has changed. Refresh before starting another journey.",
+      );
+    const started = createWorld();
+    started.runId = current.runId + 1;
+    started.nextConvoyId = current.nextConvoyId;
+    started.journey = newJourney();
+    return started;
+  }
   const world = structuredClone(current);
+  if (command.type === "journey-action") {
+    executeJourneyAction(world, command, {
+      step,
+      build: (state, id) =>
+        buildWorkshop(
+          state,
+          state.settlements.find((group) => group.id === id)!,
+          1,
+        ),
+    });
+    refreshPlans(world);
+    return world;
+  }
   if (command.type === "charter-choice") {
     executeCharterChoice(world, command, { step, createWorld, intercept });
     refreshPlans(world);
@@ -375,6 +436,10 @@ export function applyCommand(current: World, command: Command): World {
   if (world.charter)
     throw new Error(
       "This world is a charter run. Use its choices, or reset the World Lab for an experiment.",
+    );
+  if (world.journey)
+    throw new Error(
+      "This world is an exploration journey. Use local actions, or reset the World Lab for an experiment.",
     );
   switch (command.type) {
     case "join": {

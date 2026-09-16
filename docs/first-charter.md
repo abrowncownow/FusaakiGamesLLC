@@ -1,12 +1,12 @@
 # The First Charter
 
-The default game view is a short playable contract built on the autonomous settlement simulation. You are an independent organizer seeking permission to found a guild. Choose Willow or Bracken as your patron, then earn its backing at the day 21 inspection: it needs a completed workshop and at least two trust in you. The chapter ends with the charter decision; founding and managing the guild itself are future work.
+The First Charter, available at `?view=charter`, is a short playable contract built on the autonomous settlement simulation. You are an independent organizer seeking permission to found a guild. Choose Willow or Bracken as your patron, then earn its backing at the day 21 inspection: it needs a completed workshop and at least two trust in you. The chapter ends with the charter decision; founding and managing the guild itself are future work.
 
 NPCs keep gathering, eating, shipping and building while you make decisions. Your time is scarce; helping one community means spending time you could have given the other. The aim is roughly seven decisions and a worthwhile replay, rather than a promised session length. Whether those decisions are fun is still a playtest question.
 
 ## First playtest
 
-Open the game normally and play to the inspection using the information on screen. Choose a patron you would like to help. There is no prescribed route to follow or optimal sequence to memorize.
+Choose **The First Charter** from the game header and play to the inspection using the information on screen. Choose a patron you would like to help. There is no prescribed route to follow or optimal sequence to memorize.
 
 After the result, try another approach if you want to. Report the build ID, your patron, the ending, and any moment where the next action or its consequence was unclear. Useful feedback:
 
@@ -31,7 +31,7 @@ At the inspection, the result checks your patron's workshop and trust. Helping b
 
 ## Boundaries of this experiment
 
-This is one fixed, single-player contract with two autonomous communities. Fresh runs use seed 7. Replaying resets the scenario while retaining monotonically increasing run IDs within the service lifetime. Run and revision checks reject outdated choices; retry receipts prevent the same accepted action from applying twice. The world schema is version 3.
+This is one fixed, single-player contract with two autonomous communities. Fresh runs use seed 7. Replaying resets the scenario while retaining monotonically increasing run IDs within the service lifetime. Run and revision checks reject outdated choices; retry receipts prevent the same accepted action from applying twice. The world schema is version 4.
 
 Trust here is a small contract relationship mechanic. Wages, recruitment, currency, general trade, guilds and political institutions remain future work. This slice adds no runtime AI, paid service or new art dependency.
 
