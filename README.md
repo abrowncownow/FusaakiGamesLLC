@@ -1,6 +1,6 @@
 # FusaakiGames website
 
-The repository also contains the game foundation: `apps/game` (React/Vite browser), `packages/simulation` (shared TypeScript world logic), and `apps/server` (local Fastify API). Start with **`pnpm game:dev`**. See the [stack decision](docs/stack.md) and [development/release guide](docs/development.md).
+The repository also contains **Explore the valley**, a small game about gathering, carrying supplies and helping NPC communities grow. Start with **`pnpm game:dev`**, enter the world and choose where to leave your mark. **The First Charter** remains a timed challenge at `?view=charter`; **World Lab** exposes the economy at `?view=lab`. See the [playtest guide](docs/explore-the-valley.md), [simulation guide](docs/simulation.md), [stack decision](docs/stack.md), and [development/release guide](docs/development.md).
 
 Production-oriented static website for FusaakiGames LLC. Built with Next.js App Router, strict TypeScript, and Tailwind CSS. The static `out/` export works on GitHub Pages, S3, CloudFront, or another static host.
 

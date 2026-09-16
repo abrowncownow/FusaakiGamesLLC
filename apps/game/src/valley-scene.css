@@ -1,0 +1,230 @@
+.valley-scene {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 20 / 13;
+  overflow: hidden;
+  isolation: isolate;
+  background: #b0c092;
+  border: 1px solid #859572;
+  border-radius: 18px;
+  box-shadow:
+    inset 0 0 0 5px #ffffff1a,
+    0 14px 40px #203c2a12;
+}
+
+.valley-scene-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.valley-place {
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.valley-place-target {
+  fill: transparent;
+  stroke: none;
+}
+
+.valley-place-ring {
+  fill: #fff0b300;
+  stroke: #fff2bc00;
+  stroke-width: 3;
+  pointer-events: none;
+  transition:
+    fill 160ms,
+    stroke 160ms;
+}
+
+.valley-place:hover .valley-place-ring {
+  fill: #fff0b329;
+  stroke: #f5edc4c9;
+}
+
+.valley-place[aria-pressed="true"] .valley-place-ring {
+  fill: #fff5bf21;
+  stroke: #fff6cd;
+  stroke-width: 4;
+  stroke-dasharray: 5 6;
+}
+
+.valley-place:focus-visible .valley-place-target {
+  stroke: #233f34;
+  stroke-width: 4;
+  stroke-dasharray: 7 5;
+}
+
+.valley-place-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.valley-place-label {
+  position: absolute;
+  left: var(--place-x);
+  top: var(--place-y);
+  display: flex;
+  width: max-content;
+  max-width: 27%;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  color: #2c4837;
+  line-height: 1.25;
+  text-align: center;
+  filter: drop-shadow(0 2px 2px #6e82522b);
+}
+
+.valley-place-label > span {
+  padding: 5px 11px;
+  border: 1px solid #455c4133;
+  border-radius: 5px;
+  background: #f5f0d8eb;
+  font-size: clamp(10px, 1.1vw, 14px);
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.valley-place-label[data-selected="true"] > span {
+  border-color: #f7edbf;
+  background: #2e503e;
+  color: #fff4d2;
+  box-shadow: 0 0 0 2px #f5efd03b;
+}
+
+.valley-place-label small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 7px;
+  border-radius: 0 0 5px 5px;
+  background: #f6f0dcd9;
+  font-size: clamp(9px, 0.95vw, 11px);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.valley-place-label small i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #b94f3a;
+}
+
+.valley-player {
+  pointer-events: none;
+}
+
+.valley-convoy {
+  cursor: help;
+}
+
+.valley-worker {
+  animation: valley-work 3.4s ease-in-out infinite;
+}
+
+.valley-smoke {
+  fill: none;
+  stroke: #f1ebd0;
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: 0.45;
+  animation: valley-smoke 6s ease-in-out infinite;
+}
+
+.valley-river {
+  animation: valley-water 18s linear infinite;
+}
+
+.valley-compass text {
+  fill: #4a6448;
+  font:
+    600 19px Georgia,
+    serif;
+}
+
+.valley-map-hint {
+  position: absolute;
+  left: 16px;
+  bottom: 13px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #3d573d;
+  font-size: 11px;
+  font-weight: 650;
+  pointer-events: none;
+}
+
+.valley-map-hint span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+@keyframes valley-work {
+  0%,
+  30%,
+  70%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  45% {
+    transform: translateY(-1.5px) rotate(-4deg);
+  }
+  55% {
+    transform: translateY(0) rotate(3deg);
+  }
+}
+
+@keyframes valley-smoke {
+  0%,
+  100% {
+    opacity: 0.26;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes valley-water {
+  to {
+    stroke-dashoffset: -170;
+  }
+}
+
+@media (max-width: 560px) {
+  .valley-scene {
+    border-radius: 12px;
+  }
+  .valley-place-label > span {
+    padding: 4px 6px;
+  }
+  .valley-place-label small {
+    padding: 2px 5px;
+  }
+  .valley-map-hint {
+    left: 10px;
+    bottom: 8px;
+    gap: 4px;
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .valley-player,
+  .valley-place-ring {
+    transition: none;
+  }
+  .valley-worker,
+  .valley-smoke,
+  .valley-river {
+    animation: none;
+  }
+}
