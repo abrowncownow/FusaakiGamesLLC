@@ -123,6 +123,27 @@ test("keyboard exploration inspects places without spending a day", async ({
   await expect(page.getByTestId("journey-day")).toHaveText("Day 0");
 });
 
+test("the map shows valley developments while the player carries supplies", async ({
+  page,
+}) => {
+  await enter(page, "browser");
+  await act(page, "gather-timber", 1);
+  for (let day = 2; day <= 8; day++) await act(page, "rest", day);
+  await act(page, "gather-timber", 9);
+
+  const developments = page.getByTestId("journey-developments");
+  await expect(developments).toContainText("Willow village sent 12 timber.");
+  await expect(developments).toContainText("Bracken camp sent 12 timber.");
+  await expect(page.getByTestId("pack-timber")).toHaveText("8");
+
+  const news = await developments.textContent();
+  await page
+    .getByRole("button", { name: /^Grey Ridge Mine,.*Inspect place$/ })
+    .click();
+  await expect(page.getByTestId("journey-day")).toHaveText("Day 9");
+  await expect(developments).toHaveText(news!);
+});
+
 test("a stale shared tab refreshes the player's new location without gathering remotely", async ({
   page,
 }) => {

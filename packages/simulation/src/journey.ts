@@ -19,6 +19,13 @@ export interface JourneyReport {
   text: string;
   fromDay: number;
   toDay: number;
+  developments: JourneyDevelopment[];
+}
+
+export interface JourneyDevelopment {
+  kind: "workshop" | "arrival" | "departure";
+  settlementId: SettlementId;
+  text: string;
 }
 
 export interface JourneyRun {

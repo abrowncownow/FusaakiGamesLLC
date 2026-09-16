@@ -325,6 +325,20 @@ export function JourneyApp() {
               </div>
             )}
           </div>
+          {report && report.developments.length > 0 && (
+            <div
+              className="valley-developments"
+              data-testid="journey-developments"
+              aria-label="Valley developments"
+            >
+              <small>AROUND THE VALLEY</small>
+              {report.developments.map((development) => (
+                <p key={`${development.kind}-${development.settlementId}`}>
+                  {development.text}
+                </p>
+              ))}
+            </div>
+          )}
           <div className="valley-map-footer">
             <p>
               <span aria-hidden="true">◆</span>{" "}
@@ -504,6 +518,15 @@ export function JourneyApp() {
                 {report?.text ??
                   "Cut some timber here, then click a village and take it down the road. What happens next is up to you."}
               </p>
+              {report && report.developments.length > 0 && (
+                <ul className="valley-reaction-developments">
+                  {report.developments.map((development) => (
+                    <li key={`${development.kind}-${development.settlementId}`}>
+                      {development.text}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </section>
           )}
           {run && run.reports.length > 0 && (

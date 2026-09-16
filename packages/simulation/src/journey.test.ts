@@ -227,6 +227,76 @@ describe("exploring the living valley", () => {
     ).toBe(false);
   });
 
+  it("reports a workshop completed by the player's build before the crew step", () => {
+    const world = act(start(), "travel-willow");
+    const group = world.settlements[0]!;
+    group.workshop.work = 5;
+    group.workshop.reserved = { ...WORKSHOP_COST };
+    world.forestTimber -= WORKSHOP_COST.timber;
+    world.mineOre -= WORKSHOP_COST.ore;
+
+    const built = act(world, "build-willow");
+    expect(built.settlements[0]!.workshop.complete).toBe(true);
+    expect(built.journey!.reports.at(-1)!.developments).toEqual([
+      {
+        kind: "workshop",
+        settlementId: "willow",
+        text: "Willow village completed its workshop.",
+      },
+    ]);
+  });
+
+  it("reports an NPC workshop completion during an unrelated action", () => {
+    const world = start();
+    const group = world.settlements[0]!;
+    group.workshop.work = 5;
+    group.workshop.reserved = { ...WORKSHOP_COST };
+    world.forestTimber -= WORKSHOP_COST.timber;
+    world.mineOre -= WORKSHOP_COST.ore;
+
+    const gathered = act(world, "gather-timber");
+    expect(gathered.player.inventory.timber).toBe(4);
+    expect(gathered.journey!.reports.at(-1)!.developments[0]).toEqual({
+      kind: "workshop",
+      settlementId: "willow",
+      text: "Willow village completed its workshop.",
+    });
+  });
+
+  it("reports actual shipment departures once during another action", () => {
+    const world = start();
+    const group = world.settlements[0]!;
+    group.field.timber = 16;
+    world.forestTimber -= 16;
+
+    const departed = act(world, "gather-timber");
+    expect(departed.settlements[0]!.convoy).toMatchObject({
+      resource: "timber",
+      amount: 12,
+    });
+    expect(departed.journey!.reports.at(-1)!.developments).toEqual([
+      {
+        kind: "departure",
+        settlementId: "willow",
+        text: "Willow village sent 12 timber.",
+      },
+    ]);
+
+    departed.settlements[0]!.convoy!.travelRemaining = 1;
+    const arrived = act(departed, "gather-timber");
+    expect(arrived.settlements[0]!.convoy).toBeNull();
+    expect(arrived.journey!.reports.at(-1)!.developments).toEqual([
+      {
+        kind: "arrival",
+        settlementId: "willow",
+        text: "Willow village received 12 timber.",
+      },
+    ]);
+
+    const next = act(arrived, "gather-timber");
+    expect(next.journey!.reports.at(-1)!.developments).toEqual([]);
+  });
+
   it("rejects stale, remote and raw Lab actions atomically; receipts retry safely", () => {
     const service = createScenarioService();
     const world = service.execute("start", { type: "start-journey", runId: 0 });
@@ -234,6 +304,7 @@ describe("exploring the living valley", () => {
     const next = service.execute("gather", action);
     expect(service.execute("gather", action)).toEqual(next);
     expect(() => service.execute("stale", action)).toThrow("out of date");
+    expect(service.snapshot()).toEqual(next);
     expect(() =>
       service.execute("remote", command(next, "deliver-bracken")),
     ).toThrow("not available here");

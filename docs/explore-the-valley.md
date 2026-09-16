@@ -4,6 +4,8 @@ The default game opens onto a small illustrated valley. You have a visible locat
 
 Enter the valley, try cutting timber, then choose somewhere to take it. Clicking a place inspects it for free. **Walk** follows a connected road and costs one day. Gathering, delivering, building, surveying and watching the valley each also cost one day. Both NPC communities continue their real work during every action. There is no deadline or hunger meter in this experiment.
 
+After an action, **Around the valley** highlights up to two actual developments: completed workshops first, then cargo arrivals and departures. These appear alongside your own result even while you gather or travel. Looking at another place does not advance time or generate another announcement.
+
 ## Things to try
 
 - Carry timber or ore to whichever community you want to help. The pack loses the same materials the village receives.

@@ -1,9 +1,56 @@
-import type { Command, SettlementId, World } from "./model.js";
+import type { Command, Convoy, SettlementId, World } from "./model.js";
 import {
   getJourneyActions,
   JOURNEY_PLACES,
   journeyDelivery,
+  type JourneyDevelopment,
 } from "./journey.js";
+
+interface SettlementTransition {
+  id: SettlementId;
+  workshopComplete: boolean;
+  convoy: Convoy | null;
+}
+
+function settlementSnapshot(world: World): SettlementTransition[] {
+  return world.settlements.map((group) => ({
+    id: group.id,
+    workshopComplete: group.workshop.complete,
+    convoy: group.convoy ? { ...group.convoy } : null,
+  }));
+}
+
+function valleyDevelopments(before: SettlementTransition[], after: World) {
+  const developments: JourneyDevelopment[] = [];
+  for (const group of after.settlements) {
+    const prior = before.find((entry) => entry.id === group.id)!;
+    if (!prior.workshopComplete && group.workshop.complete)
+      developments.push({
+        kind: "workshop",
+        settlementId: group.id,
+        text: `${group.name} completed its workshop.`,
+      });
+  }
+  for (const group of after.settlements) {
+    const prior = before.find((entry) => entry.id === group.id)!;
+    if (prior.convoy && prior.convoy.id !== group.convoy?.id)
+      developments.push({
+        kind: "arrival",
+        settlementId: group.id,
+        text: `${group.name} received ${prior.convoy.amount} ${prior.convoy.resource}.`,
+      });
+  }
+  for (const group of after.settlements) {
+    const prior = before.find((entry) => entry.id === group.id)!;
+    if (group.convoy && group.convoy.id !== prior.convoy?.id)
+      developments.push({
+        kind: "departure",
+        settlementId: group.id,
+        text: `${group.name} sent ${group.convoy.amount} ${group.convoy.resource}.`,
+      });
+  }
+  return developments.slice(0, 2);
+}
 
 interface JourneyEffects {
   step(world: World): void;
@@ -32,6 +79,7 @@ export function executeJourneyAction(
       "That action is not available here. Choose a place or activity in your current location.",
     );
   const fromDay = world.tick;
+  const before = settlementSnapshot(world);
   let title = "A day in the valley.";
   let text = "You watched the crews carry on with their work.";
   if (action.kind === "travel" && action.destination) {
@@ -73,6 +121,7 @@ export function executeJourneyAction(
       "Under the ivy, the trail markers still point down the ridge. You found a direct route between the lookout and Willow: one day instead of three. Someone has scratched ‘definitely not a shortcut’ into the first sign.";
   }
   effects.step(world);
+  const developments = valleyDevelopments(before, world);
   if (action.kind === "rest") {
     const news = world.events.filter(
       (event) =>
@@ -94,6 +143,7 @@ export function executeJourneyAction(
     text,
     fromDay,
     toDay: world.tick,
+    developments,
   });
   run.reports = run.reports.slice(-80);
 }
